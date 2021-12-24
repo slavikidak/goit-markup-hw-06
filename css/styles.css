@@ -176,7 +176,8 @@ header .studio {
   text-align: center;
 }
 
-.hero-section .button {
+.hero-section .button,
+.form .button {
   display: inline-block;
   cursor: pointer;
   background-color: var(--accent-color);
@@ -193,10 +194,8 @@ header .studio {
   transition: 250ms background-color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero-section .button:hover,
-.hero-section .button:focus,
-.portfolio-filter .button:hover,
-.portfolio-filter .button:focus {
+.button:hover,
+.button:focus {
   background-color: #188ce8;
   color: #ffffff;
 }
@@ -238,7 +237,7 @@ header .studio {
   line-height: 1.71;
 }
 
-.goals .list-item:nth-child(1):before {
+.goals .list-item:nth-child(1)::before {
   display: block;
   content: "";
   height: 120px;
@@ -252,7 +251,7 @@ header .studio {
   margin-bottom: 30px;
 }
 
-.goals .list-item:nth-child(2):before {
+.goals .list-item:nth-child(2)::before {
   display: block;
   content: "";
   height: 120px;
@@ -266,7 +265,7 @@ header .studio {
   margin-bottom: 30px;
 }
 
-.goals .list-item:nth-child(3):before {
+.goals .list-item:nth-child(3)::before {
   display: block;
   content: "";
   height: 120px;
@@ -280,7 +279,7 @@ header .studio {
   margin-bottom: 30px;
 }
 
-.goals .list-item:nth-child(4):before {
+.goals .list-item:nth-child(4)::before {
   display: block;
   content: "";
   height: 120px;
@@ -577,6 +576,7 @@ header .studio {
   opacity: 0;
   scale: 0.8;
   pointer-events: none;
+  filter: blur(1px);
 }
 
 .backdrop {
@@ -599,15 +599,15 @@ header .studio {
 
 .modal {
   position: fixed;
-  width: 528px;
-  height: 581px;
+  width: 530px;
+  min-height: 580px;
 
   top: 50%;
   left: 50%;
 
   transform: translate(-50%, -50%);
 
-  padding: 20px;
+  padding: 40px;
   border-radius: 4px;
 
   background-color: var(--white-color);
@@ -615,10 +615,63 @@ header .studio {
     0px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
+form > .head {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  color: var(--secondary-text-color);
+  text-align: right;
+}
+
+.form .input-box {
+  display: block;
+  position: relative;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.modal .input,
+.modal .message,
+.subscribe-box .input {
+  width: 100%;
+  height: 40px;
+  margin-top: 4px;
+  padding: 0 10px 0 40px;
+
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) border;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+}
+
+.modal .message {
+  font-family: inherit;
+  resize: none;
+  height: 120px;
+  padding: 12px 16px;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) border;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+}
+
+.message::placeholder {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+
+  color: rgba(117, 117, 117, 0.5);
+}
+
+/* Иконка закрытия модалки */
+
 .button.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 8px;
   right: 8px;
+  padding: 0;
 
   width: 30px;
   height: 30px;
@@ -629,11 +682,87 @@ header .studio {
   cursor: pointer;
 }
 
-.modal svg {
+.modal .icon {
+  display: block;
   fill: #000;
-  width: 11px;
-  height: 11px;
+  width: 18px;
+  height: 18px;
+
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) fill;
 }
+
+.modal .icon:hover,
+.modal .icon:focus {
+  fill: var(--accent-color);
+}
+
+/* Иконка закрытия модалки */
+
+.form .input-icon {
+  position: absolute;
+  display: block;
+
+  top: 50%;
+  left: 12px;
+
+  width: 18px;
+  height: 18px;
+  fill: #000000;
+
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) fill;
+}
+
+.input:focus + .input-icon {
+  fill: var(--accent-color);
+}
+
+.input:focus,
+.modal .message:focus {
+  border: var(--accent-color) 1px solid;
+}
+
+.form .checkbox-label {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.checkbox-label a {
+  color: var(--accent-color);
+}
+
+.checkbox + .icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  margin-right: 7px;
+
+  fill: transparent;
+  background-color: var(--white-color);
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) fill,
+    250ms cubic-bezier(0.4, 0, 0.2, 1) background-color,
+    250ms cubic-bezier(0.4, 0, 0.2, 1) border;
+  border: var(--secondary-text-color) 2px solid;
+  border-radius: 4px;
+}
+
+.checkbox:checked + .icon {
+  fill: var(--white-color);
+  background-color: var(--accent-color);
+  border: transparent 0px solid;
+}
+
+.button-box {
+  display: flex;
+  justify-content: center;
+}
+
+.form .button {
+  width: 200px;
+  margin-top: 30px;
+}
+
 /* ++++++ Модалка - окончание +++++++*/
 
 /* Футер */
@@ -678,11 +807,14 @@ footer .studio {
   margin-left: 70px;
 }
 
-.footer .social-links {
+/* .footer .social-links {
   margin-top: 20px;
-}
+} */
 
-.social-box .title {
+.social-box .title,
+.footer .title {
+  margin-bottom: 20px;
+  font-weight: 700;
   font-size: 14px;
   line-height: 1.14;
   letter-spacing: 0.03em;
@@ -702,4 +834,47 @@ footer .studio {
 
 .footer .icon {
   fill: var(--white-color);
+}
+
+.subscribe-box {
+  margin-left: auto;
+}
+
+.subscribe-box .form {
+  display: inline-flex;
+  align-items: center;
+}
+
+.subscribe-box .input {
+  min-width: 358px;
+  height: 50px;
+  margin: 0;
+  padding: 15px 16px;
+
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 400;
+
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 4px 4px 0px #00000026;
+  color: var(--white-color);
+}
+
+.subscribe.button {
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-left: 12px;
+  padding: 10px 28px;
+}
+
+.subscribe .icon {
+  display: inline-block;
+  padding: 0;
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
 }
